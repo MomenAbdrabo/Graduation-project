@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="CSS/all.min.css">
+  <link rel="stylesheet" href="CSS/normalize.css">
+  <link rel="stylesheet" href="CSS/style.css">
+  <title>تسجيل الدخول</title>
+  <link rel="icon" href="IMGS/logo-2.png">
+</head>
+
+<body>
+  <!-- Start LogIn -->
+  <div class="login-wrapper">
+    <div class="overlay"></div>
+    <div class="log-info">
+      <div class="overlay"></div>
+      <h3>تسجيل الدخول</h3>
+      <form action="" method="get" id="login-form">
+        <div class="email">
+          <input type="email" name="email" id="email" required placeholder="البريد الالكتروني">
+        </div>
+        <div class="password">
+          <input id="pass" type="password" name="pass"   required placeholder="كلمه المرور">
+          <i id="eye" class="car fa-regular fa-eye-slash" onclick="togglePassword()"></i>
+        </div>
+        <div class="log-btn">
+          <input type="submit" name="submit" value="تسجيل الدخول">
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- End LogIn -->
+  <script src="JS/main.js"></script>
+  <script >
+    const apiEndpoint = 'http://localhost:2500/user/login';
+
+const loginForm = document.querySelector('#login-form');
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const loginData = {
+    email: loginForm.elements.email.value,
+    password: loginForm.elements.pass.value,
+    
+  };
+console.log(loginData);
+  fetch(apiEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(loginData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    // handle successful response
+    console.log(data);
+
+    // save login data to local storage
+    localStorage.setItem('loginData', JSON.stringify(loginData));
+    window.location.href = './project panal/dashboard.html';
+  })
+  .catch(error => {
+      console.error(error);
+      alert("password or email not correct");
+    });
+              
+
+});
+
+  </script>
+</body>
+
+
+</html>
